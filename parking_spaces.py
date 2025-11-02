@@ -3,22 +3,13 @@ import heapq
 def min_parking_spots(intervals):
     if not intervals:
         return 0
-
-    # Sort by start time
     intervals.sort(key=lambda x: x[0])
-
-    heap = []  # store end times
+    heap = []
     max_spots = 0
-
     for start, end in intervals:
-        # Free up spots for cars that have already left
         while heap and heap[0] <= start:
             heapq.heappop(heap)
-
-        # Allocate a spot for the current car
         heapq.heappush(heap, end)
-
-        # Track the maximum concurrent cars
         max_spots = max(max_spots, len(heap))
-
     return max_spots
+
